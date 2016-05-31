@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		 xmlns="http://java.sun.com/xml/ns/j2ee" 
+		 xmlns:javaee="http://java.sun.com/xml/ns/javaee" 
+		 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+		 xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
+		 version="2.4">
+
+  	<!-- 处理前台JSP页面和JAVA代码中使用了不同的字符集进行编码的时候就会出现表单提交的数据
+  		  或者上传/下载中文名称文件出现乱码的问题-->
+  	<filter>
+    	<filter-name>CharacterEncodingFilter</filter-name>
+    	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    	<init-param>
+      		<param-name>encoding</param-name>
+      		<param-value>UTF-8</param-value>
+    	</init-param>
+    	<init-param>
+    		<!-- 当request中已经被指定了一个字符集的时候,是否再将用endcoding对应的字符集设置到request中去 -->
+      		<param-name>forceEncoding</param-name>
+      		<param-value>true</param-value>
+    	</init-param>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>CharacterEncodingFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  	
+	<!-- 为了让spring能够读到这些配置文件，并观察他们的变化，需要注册配置文件读取器 -->
+  	<listener>
+    	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  	</listener>
+  	
+  	<!-- 加载spring的配置文件 -->
+  	<context-param>
+    	<param-name>contextConfigLocation</param-name>
+    	<param-value>classpath*:spring/*.xml</param-value>
+  	</context-param>
+  	
+  	<!-- 在DispatcherServlet的初始化过程中，Spring会在web应用的WEB-INF文件夹下寻找名为
+  		 [servlet-name]-servlet.xml的配置文件，生成文件中定义的bean。这些bean会覆盖在全
+  		   局范围（global cope）中定义的同名的bean。
+  	 -->
+  	<servlet>
+    	<servlet-name>springmvc</servlet-name>
+    	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    	<load-on-startup>1</load-on-startup>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>springmvc</servlet-name>
+   		<url-pattern>*.do</url-pattern>
+  	</servlet-mapping>
+  
+  	<!-- 设置session超时时间 -->
+  	<session-config>
+    	<session-timeout>10</session-timeout>
+  	</session-config>
+  	
+  	<!-- 默认首页定义 -->  
+  	<welcome-file-list>
+    	<welcome-file>index.jsp</welcome-file>
+  	</welcome-file-list>
+  	
+  	<!-- Error Page定义 -->  
+  	<error-page>
+    	<error-code>404</error-code>
+    	<location>/commons/404.jsp</location>
+  	</error-page>
+  	<error-page>
+    	<error-code>403</error-code>
+    	<location>/commons/403.jsp</location>
+  	</error-page>
+  	<error-page>
+    	<error-code>500</error-code>
+    	<location>/commons/error.jsp</location>
+  	</error-page>
+  	<error-page> 
+        <exception-type>java.lang.NullException</exception-type> 
+        <location>/commons/error.jsp</location>
+   </error-page>
+ 
+</web-app>

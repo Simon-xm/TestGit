@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+	<typeAlias alias="userDto" type="com.springmvc.biz.dto.UserDto"/>
+	<select id="loginByName" resultClass="java.lang.String" parameterClass="java.lang.String">
+		<![CDATA[
+		SELECT SUM(1) AS USERROWS FROM TB_USER WHERE USERNAME = #name#
+		]]>
+	</select>
+	<select id="loginByNamePass" resultClass="java.lang.String" parameterClass="userDto">
+		<![CDATA[
+		SELECT SUM(1) AS USERROWS FROM TB_USER WHERE USERNAME = #name# AND PASSWORD = #pass#
+		]]>
+	</select>
+</sqlMap>
