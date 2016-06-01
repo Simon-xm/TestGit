@@ -9,11 +9,7 @@
 	<version>[2.40.0,)</version>
 	<name>springmvc.demo01 Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-<<<<<<< HEAD
 	<!-- 这是git同步测试  2016-06-01 15:12:55-->
-=======
-	<!-- 这是git同步测试  2016-06-01 15:03:37-->
->>>>>>> 9964c86257d394b1792718c80e1efe11d448eb08
 	
 	<!-- maven 加载驱动包 -->
 	<dependencies>
